@@ -1,0 +1,227 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+<style>
+  #modOverlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 100000;
+    font-family: "Red Hat Display", sans-serif;
+  }
+
+  #modOverlay[aria-hidden="false"] {
+    display: flex;
+  }
+
+  #modOverlay .mod-overlay-panel {
+    width: min(760px, 94vw);
+    max-height: 85vh;
+    overflow: auto;
+    background: #111;
+    border: 2px solid #3a3a3a;
+    border-radius: 12px;
+    padding: 20px;
+    color: #fff;
+    box-sizing: border-box;
+  }
+
+  #modOverlay .mod-overlay-title {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  #modOverlay .mod-overlay-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  #modOverlay .mod-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+
+  #modOverlay .mod-tab-btn {
+    padding: 8px 12px;
+    border: 1px solid #2f364a;
+    background: #171d2a;
+    color: #dbe5ff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: "Red Hat Display", sans-serif;
+    font-weight: 700;
+  }
+
+  #modOverlay .mod-tab-btn.active {
+    background: #2c5dd6;
+    border-color: #72a0ff;
+    color: #fff;
+  }
+
+  #modOverlay .mod-tab-panel {
+    display: none;
+    background: #0b0e16;
+    border: 1px solid #20263a;
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+
+  #modOverlay .mod-tab-panel.active {
+    display: block;
+  }
+
+  #modOverlay .mod-cards {
+    display: grid;
+    gap: 10px;
+  }
+
+  #modOverlay .mod-card {
+    display: grid;
+    grid-template-columns: 34px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid #2c344d;
+    border-radius: 10px;
+    padding: 8px 10px;
+  }
+
+  #modOverlay .mod-card-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: #212a44;
+    border: 1px solid #3b4a72;
+  }
+
+  #modOverlay .mod-card-title {
+    font-weight: 700;
+    color: #f3f6ff;
+  }
+
+  #modOverlay .mod-card-meta {
+    color: #9ea7bc;
+    font-size: 12px;
+  }
+
+  #modOverlay .mod-card-delete {
+    padding: 6px 10px;
+    border: 1px solid #7a3942;
+    background: #2b1418;
+    color: #ffd9df;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: "Red Hat Display", sans-serif;
+    font-size: 12px;
+  }
+
+  #modOverlay .mod-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+
+  #modOverlay .mod-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  #modOverlay .mod-file-input {
+    max-width: 100%;
+  }
+
+  #modOverlay .mod-import-status {
+    margin-top: 10px;
+    color: #b9c8ff;
+    font-size: 13px;
+    min-height: 18px;
+  }
+
+  #modOverlay .mod-overlay-controls {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  #modOverlay .mod-overlay-btn {
+    padding: 8px 12px;
+    border: 1px solid #777;
+    background: #222;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: "Red Hat Display", sans-serif;
+  }
+
+  #modOverlay .mod-restart-btn[hidden] {
+    display: none;
+  }
+</style>
+
+<div id="modOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="mod-overlay-panel">
+    <div class="mod-overlay-header">
+      <div>
+        <h2 class="mod-overlay-title">WAGE</h2>
+      </div>
+      <button type="button" class="mod-overlay-btn" data-mod-overlay-close>Close</button>
+    </div>
+
+    <div class="mod-tabs" role="tablist" aria-label="Mod tabs">
+      <button type="button" class="mod-tab-btn active" data-mod-tab-btn="loaded" role="tab" aria-selected="true">Loaded Mods</button>
+      <button type="button" class="mod-tab-btn" data-mod-tab-btn="import" role="tab" aria-selected="false">Import Mods</button>
+      <button type="button" class="mod-tab-btn" data-mod-tab-btn="menu" role="tab" aria-selected="false">Mod Menu</button>
+    </div>
+
+    <section class="mod-tab-panel active" data-mod-tab-panel="loaded" role="tabpanel">
+      <h3>Loaded Mods</h3>
+      <div class="mod-cards" data-mod-loaded-list></div>
+    </section>
+
+    <section class="mod-tab-panel" data-mod-tab-panel="import" role="tabpanel">
+      <h3>Import Mods</h3>
+      <div class="mod-row">
+        <input class="mod-file-input" data-mod-file-input type="file" multiple />
+      </div>
+      <div class="mod-row">
+        <button type="button" class="mod-overlay-btn" data-mod-clear-imports-btn>Clear Imported Mods</button>
+        <button type="button" class="mod-overlay-btn mod-restart-btn" data-mod-restart-btn hidden>Restart To Apply</button>
+      </div>
+      <div class="mod-import-status" data-mod-import-status></div>
+    </section>
+
+    <section class="mod-tab-panel" data-mod-tab-panel="menu" role="tabpanel">
+      <label class="mod-toggle">
+        <input type="checkbox" data-fun-mod-toggle="rainbow" />
+        <span>Rainbow effect</span>
+      </label>
+      <label class="mod-toggle">
+        <input type="checkbox" data-fun-mod-toggle="noclip" />
+        <span>Noclip</span>
+      </label>
+      <label class="mod-toggle">
+        <input type="checkbox" data-fun-mod-toggle="platformerTest" />
+        <span>Platformer</span>
+      </label>
+    </section>
+
+    <div class="mod-overlay-controls">
+      <button type="button" class="mod-overlay-btn" data-mod-overlay-close>Done</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GD Mod API Docs</title>
+  <style>
+  html, body, body * {
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    background:#0d1220;
+    color:#e8efff;
+  }
+    pre { background:#11182b; border:1px solid #2b395e; border-radius:10px; padding:12px; overflow:auto; }
+    code { font-family: Consolas, monospace; }
+    .note { color:#b7c5ea; }
+  </style>
+</head>
+<body>
+  <h1>Geometry Dash Mod API</h1>
+  <p class="note">Use this in imported HTML/JS mods.</p>
+
+  <h2>Hook Phases</h2>
+  <pre><code>before
+ during
+ after</code></pre>
+
+  <h2>Main Events (GameScene)</h2>
+  <pre><code>after.game.loaded
+after.scene.loaded
+
+after.menu.play.clicked
+after.game.start
+
+after.game.pause
+after.game.resume
+
+after.player.jump
+after.player.landed
+after.player.airborne
+after.player.death
+after.player.respawn
+
+after.level.restart
+after.attempt.count
+
+during.game.update</code></pre>
+
+  <h2>UI Activation</h2>
+  <pre><code>after.player.death = activate.ui("UI_lol").and.animate.from.right_top.to.center_top.elastic.out;
+after.player.respawn = disable.ui("UI_lol");
+
+// id or class both work:
+// &lt;div id="UI_lol"&gt;...&lt;/div&gt;
+// &lt;div class="UI_lol"&gt;...&lt;/div&gt;</code></pre>
+
+  <h2>Position Classes</h2>
+  <pre><code>ic  // inside center
+il  // inside left
+ir  // inside right
+sl  // side left
+sr  // side right</code></pre>
+
+  <h2>Animation Grammar</h2>
+  <pre><code>.and.animate.from.left.to.right.elastic.in
+
+from / to supported points:
+left, right, top, bottom, center,
+left_top, top_left, right_top, top_right,
+left_bottom, bottom_left, right_bottom, bottom_right
+
+easing type:
+ease, elastic, bounce, exponential, sine, back
+
+easing direction:
+in, out, inout</code></pre>
+
+  <h2>Timed Hooks</h2>
+  <pre><code>// fire 2 seconds after game.start event
+after.game.start.for["2"].seconds = activate.mod.platformer;
+
+// units: milliseconds, seconds, minutes, hours</code></pre>
+
+  <h2>Timed Actions + Then Chain</h2>
+  <pre><code>after.game.start = activate.mod.platformer.for["2"].minutes.then.activate("ui2");
+
+// this enables platformer for 2 minutes,
+// then runs named action "ui2"</code></pre>
+
+  <h2>Named Actions (def)</h2>
+  <pre><code>const ui2 = activate.ui("UI_lol").and.animate.from.right_top.to.center_top.elastic.out;
+def("ui2", ui2);
+
+if (attempt.count &gt; larger.than["13"]) {
+  after.player.death = activate.mod.rainbow;
+} else {
+  activate("ui2");
+}</code></pre>
+
+  <h2>Fun Mods</h2>
+  <pre><code>activate.mod.rainbow
+disable.mod.rainbow
+
+activate.mod.noclip
+disable.mod.noclip
+
+activate.mod.platformer   // alias of platformerTest
+disable.mod.platformer
+
+// also works:
+activate.mod.platformerTest
+disable.mod.platformerTest</code></pre>
+
+  <h2>Attempt Helpers</h2>
+  <pre><code>attempt.count            // current attempt number
+larger.than["13"]           // number helper (13)
+smaller.than["5"]           // number helper (5)</code></pre>
+
+    <p class="note">`def ui2 = ...` is not valid JavaScript syntax. Use <code>const ui2 = ...</code> and then <code>def("ui2", ui2)</code>.</p>
+</body>
+</html>
+
+

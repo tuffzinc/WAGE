@@ -1,0 +1,6 @@
+# if you're planning on making a mod that doesn't have the source but only the compiled version (assuming to save space), then you can uncomment this.
+# note that dist.js remains for the most part deobfuscated so you'd have to obfuscate it yourself (better yet - DON'T!! 😿😿) 
+
+# /src
+# /build.mjs
+# /package.json

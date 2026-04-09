@@ -1,0 +1,41 @@
+{
+  "version": 2,
+  "description": "do npm run build to compile these! segment order in this json is important, the game wont launch if dependencies aren't initialized early.",
+  "segments": [
+
+    {"file": "dependencies/phaser.js", "note": "frozen dependency blob (webpack + phaser modules)"},
+    {"file": "dependencies/pako.es5.js", "note": "pako runtime (inflate / deflate / gzip)"},
+
+    {"file": "WebpackEntry.js", "note": "webpack bridge, __GD_MODULE_MAP"},
+    {"file": "config/Global.js", "note": "game width, physics multiplier, collision tags, blend modes and more fun stuff"},
+    {"file": "config/Buttons.js", "note": "pause row + end-screen button definitions (frames / layout keys)"},
+    
+    {"file": "game/fun/Rainbow.js"},
+    {"file": "game/fun/PlatformerTest.js"},
+    {"file": "game/fun/Noclip.js"},
+    {"file": "game/mods/ui.js"},
+    
+    {"file": "game/BootScene.js"},
+    {"file": "game/LoadingScene.js"},
+    {"file": "game/GameLevel.js"},
+    {"file": "game/GameScene.js"},
+
+    {"file": "game/player/CollisionRect.js"},
+    {"file": "game/player/PhysicsState.js"},
+    {"file": "game/player/Player.js"},
+    {"file": "game/player/ShipTrail.js"},
+
+    {"file": "AudioManager.js"},
+    {"file": "ColorManager.js"},
+    {"file": "ColorTween.js", "note": "COLOR_ID_*, color tween"},
+    {"file": "FontRegister.js", "note": "angelcode .fnt to phaser font conversion"},
+    {"file": "LevelParser.js", "note": "level string parse: base64 + zlib + object records"},
+    {"file": "ObjectRegistry.js", "note": "objects from objects.json"},
+    {"file": "ParticleHelpers.js", "note": "tween radial graphic, sparkle burst"},
+    {"file": "QualityChange.js", "note": "LD and HD quality logic"},
+    {"file": "TextureHelpers.js", "note": "resolve atlas frames, add atlas / standalone images"},
+
+    {"file": "config/Game.js", "note": "phaser config & start"}
+
+  ]
+}
