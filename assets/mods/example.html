@@ -3,7 +3,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Attempt Demo</title>
+<title>Soggy cat death screen</title>
 <style>
   .death_ui_card {
     position: fixed;
@@ -18,11 +18,21 @@
     color: #ffffff;
     font-family: "Red Hat Display", sans-serif;
   }
+
+    img.hmm {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover; /* keeps aspect ratio and fills screen */
+  }
 </style>
 
-<h1 id="UI_lol" class="death_ui_card">You Died</h1>
+<container id="UI_lol">
+<a class="hmm" href="https://imgbb.com/"><img src="https://i.ibb.co/d0k6BRrY/download-2026-04-10-T112955-575.jpg" alt="download 2026 04 10T112955 575" border="0"></a>
+</container>
 
 <script>
 
-after.mouse.right = activate.ui("UI_lol").and.activate.mod.rainbow
+after.player.death = enable.ui("UI_lol")
+after.player.respawn = disable.ui("UI_lol")
+
 </script>

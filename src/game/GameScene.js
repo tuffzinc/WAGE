@@ -1196,20 +1196,12 @@ this._gui.add([dim, panel, title, close]);
     });
     if (this._modHookState) {
       const isDeadNow = !!this._state.isDead;
-      if (isDeadNow && !this._modHookState.wasDead) {
-        this._emitModHook("after", "death", {
-          x: this._playerWorldX,
-          y: this._state.y
-        });
-        this._emitModHook("after", "player.death", {
-          x: this._playerWorldX,
-          y: this._state.y
-        });
-      } else if (!isDeadNow && this._modHookState.wasDead) {
+      if (!isDeadNow && this._modHookState.wasDead) {
         this._emitModHook("after", "player.respawn", {
           x: this._playerWorldX,
           y: this._state.y
         });
+        this._modHookState.wasDead = false;
       }
       const onGroundNow = !!this._state.onGround;
       if (onGroundNow && !this._modHookState.wasOnGround) {
@@ -1223,7 +1215,6 @@ this._gui.add([dim, panel, title, close]);
           y: this._state.y
         });
       }
-      this._modHookState.wasDead = isDeadNow;
       this._modHookState.wasOnGround = onGroundNow;
     }
     if (this._paused) {
@@ -1344,6 +1335,17 @@ this._gui.add([dim, panel, title, close]);
       return;
     }
     if (this._state.isDead) {
+      if (this._modHookState && !this._modHookState.wasDead) {
+        this._emitModHook("after", "death", {
+          x: this._playerWorldX,
+          y: this._state.y
+        });
+        this._emitModHook("after", "player.death", {
+          x: this._playerWorldX,
+          y: this._state.y
+        });
+        this._modHookState.wasDead = true;
+      }
       if (!this._deathSoundPlayed) {
         this._audio.stopMusic();
         this._audio.playEffect("explode_11", {
@@ -1398,6 +1400,17 @@ this._gui.add([dim, panel, title, close]);
       }
     }
     this._state.lastY = savedY;
+    if (this._modHookState && this._state.isDead && !this._modHookState.wasDead) {
+      this._emitModHook("after", "death", {
+        x: this._playerWorldX,
+        y: this._state.y
+      });
+      this._emitModHook("after", "player.death", {
+        x: this._playerWorldX,
+        y: this._state.y
+      });
+      this._modHookState.wasDead = true;
+    }
     if (!this._endCameraOverride) {
       const camFollowX = this._playerWorldX - viewportHalfMinus150;
       if (this._level.endXPos > 0) {
