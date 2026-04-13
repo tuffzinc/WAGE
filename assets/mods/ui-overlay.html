@@ -58,6 +58,7 @@
     cursor: pointer;
     font-family: "Red Hat Display", sans-serif;
     font-weight: 700;
+    transition: all 0.2s ease;
   }
 
   #modOverlay .mod-tab-btn.active {
@@ -77,6 +78,83 @@
 
   #modOverlay .mod-tab-panel.active {
     display: block;
+  }
+
+  #modOverlay .mod-file-input {
+    background: #171d2a;
+    border: 1px solid #2c344d;
+    border-radius: 8px;
+    color: #9ea7bc;
+    padding: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-family: inherit;
+  }
+
+  #modOverlay .mod-file-input::file-selector-button {
+    background: #2c5dd6;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    padding: 6px 14px;
+    margin-right: 15px;
+    cursor: pointer;
+    font-family: "Red Hat Display", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    transition: background 0.2s;
+  }
+
+  #modOverlay .mod-file-input::file-selector-button:hover {
+    background: #3d6eff;
+  }
+
+  #modOverlay .mod-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #20263a;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  #modOverlay .mod-toggle:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  #modOverlay .mod-toggle input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #171d2a;
+    border: 2px solid #3b4a72;
+    border-radius: 50%; /* Circle look, or use 4px for square */
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  #modOverlay .mod-toggle input[type="checkbox"]:checked {
+    background: #2c5dd6;
+    border-color: #72a0ff;
+  }
+
+  #modOverlay .mod-toggle input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
   }
 
   #modOverlay .mod-cards {
@@ -134,17 +212,6 @@
     flex-wrap: wrap;
   }
 
-  #modOverlay .mod-toggle {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-  }
-
-  #modOverlay .mod-file-input {
-    max-width: 100%;
-  }
-
   #modOverlay .mod-import-status {
     margin-top: 10px;
     color: #b9c8ff;
@@ -156,6 +223,7 @@
     display: flex;
     gap: 8px;
     justify-content: flex-end;
+    margin-top: 10px;
   }
 
   #modOverlay .mod-overlay-btn {
@@ -166,6 +234,11 @@
     border-radius: 8px;
     cursor: pointer;
     font-family: "Red Hat Display", sans-serif;
+    transition: background 0.2s;
+  }
+
+  #modOverlay .mod-overlay-btn:hover {
+    background: #333;
   }
 
   #modOverlay .mod-restart-btn[hidden] {
